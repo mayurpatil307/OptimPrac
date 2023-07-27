@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 interface FavoritePokemonDao {
 
     @Query("Select * FROM ${Pokemon.TABLE_NAME}")
-    suspend fun getAllFavoritePokemon(): Flow<List<Pokemon>>
+    fun getAllFavoritePokemon(): Flow<List<Pokemon>>
 
     @Query("Select * FROM ${Pokemon.TABLE_NAME}")
     suspend fun getAllFavoritePokemonAsync(): List<Pokemon>

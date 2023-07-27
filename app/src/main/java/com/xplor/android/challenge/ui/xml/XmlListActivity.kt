@@ -57,15 +57,21 @@ class XmlListActivity : AppCompatActivity(), PokedexAdapter.OnClickListener {
                 when (it) {
                     is ApiState.Success -> {
                         Timber.d("Success: ${it.data}")
-                        binding.progressbar.visibility = View.GONE
-                        adapter.submitList(it.data)
+                        withContext(Dispatchers.Main) {
+                            binding.progressbar.visibility = View.GONE
+                            adapter.submitList(it.data)
+                        }
                     }
                     is ApiState.Loading -> {
-                        binding.progressbar.visibility = View.VISIBLE
+                        withContext(Dispatchers.Main) {
+                            binding.progressbar.visibility = View.VISIBLE
+                        }
                     }
                     is ApiState.Error -> {
                         Timber.e(it.e)
-                        binding.progressbar.visibility = View.GONE
+                        withContext(Dispatchers.Main) {
+                            binding.progressbar.visibility = View.GONE
+                        }
                     }
                 }
             }
@@ -77,13 +83,18 @@ class XmlListActivity : AppCompatActivity(), PokedexAdapter.OnClickListener {
                     when (it) {
                         is ApiState.Success -> {
                             Timber.d("Success Favorite Pokemon: ${it.data}")
-                            if (it.data.isEmpty()) {
-                                binding.favoriteRecyclerview.visibility = View.GONE
-                            } else {
-                                binding.favoriteRecyclerview.visibility = View.VISIBLE
-                                favoriteAdapter.submitList(it.data)
+
+                                if (it.data.isEmpty()) {
+                                    withContext(Dispatchers.Main) {
+                                        binding.favoriteRecyclerview.visibility = View.GONE
+                                    }
+                                } else {
+                                    withContext(Dispatchers.Main) {
+                                        binding.favoriteRecyclerview.visibility = View.VISIBLE
+                                        favoriteAdapter.submitList(it.data)
+                                    }
+                                }
                             }
-                        }
 
                         is ApiState.Loading -> {
                             Timber.d("Favorite Pokemon loading")

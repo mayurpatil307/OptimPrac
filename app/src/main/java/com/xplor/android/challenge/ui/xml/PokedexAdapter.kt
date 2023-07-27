@@ -34,7 +34,7 @@ class PokedexAdapter(
             }
 
             override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
-                return oldItem.name == newItem.name
+                return oldItem.name == newItem.name && oldItem.isFavorite == newItem.isFavorite
             }
         }
     }
